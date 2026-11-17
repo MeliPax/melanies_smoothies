@@ -14,8 +14,12 @@ pkb = p_key.private_bytes(
     encryption_algorithm=serialization.NoEncryption(),
 )
 
-cnx = st.connection("snowflake", private_key=pkb)
-session = cnx.session()
+try:
+    cnx = st.connection("snowflake", private_key=pkb)
+    session = cnx.session()
+except Exception as e:
+    st.error(str(e))
+    st.stop()
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
 st.write("Choose the fruits you want in your custom Smoothie!")
