@@ -8,6 +8,15 @@ p_key = serialization.load_pem_private_key(
     st.secrets["snowflake_key"]["pem"].encode(),
     password=None,
 )
+
+
+import hashlib, base64
+pub_der = p_key.public_key().public_bytes(
+    serialization.Encoding.DER,
+    serialization.PublicFormat.SubjectPublicKeyInfo,
+)
+st.write("App key FP: SHA256:" + base64.b64encode(hashlib.sha256(pub_der).digest()).decode())
+
 pkb = p_key.private_bytes(
     encoding=serialization.Encoding.DER,
     format=serialization.PrivateFormat.PKCS8,
