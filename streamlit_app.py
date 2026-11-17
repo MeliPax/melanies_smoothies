@@ -1,8 +1,8 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
-
-from cryptography.hazmat.primitives import serialization
+import requests  
+# from cryptography.hazmat.primitives import serialization
 
 p_key = serialization.load_pem_private_key(
     st.secrets["snowflake_key"]["pem"].encode(),
@@ -10,6 +10,8 @@ p_key = serialization.load_pem_private_key(
 )
 
 
+smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+st.text(smoothiefroot_response)
 
 
 pkb = p_key.private_bytes(
